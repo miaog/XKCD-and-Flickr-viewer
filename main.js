@@ -649,12 +649,10 @@ let ComicPane = Container.template($ => ({
 
 /* Helper function for sending the HTTP request for XKCD and loading the response */
 function getImg(uiCallback, url) {
-    // trace("xkcd url: " + url + '\n')
     var message = new Message(url)
     message.invoke(Message.TEXT).then(text => {
       if (0 == message.error && 200 == message.status) {
           try {
-            // trace("xkcd text: " + text+ '\n')
             var response = JSON.parse(text)
             safeTitle = response.safe_title
             if (response.img) {
@@ -678,16 +676,13 @@ function getImg(uiCallback, url) {
 
 /* Helper function for sending the HTTP request for flickr and loading the response */
 function getImgFlickr(uiCallback, url) {
-    // trace("URL: "+ url + '\n')
     var message1 = new Message(url)
     
     message1.invoke(Message.TEXT).then(text => {
       if (0 == message1.error && 200 == message1.status) {
           try {
-            // trace("text: " + text+ '\n')
             var response = JSON.parse(text)
             safeTitle = response.safe_title
-            // trace("response.photo is: " + response + '\n')
             var photo_url = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=2854926198390429ffc0e398f45c521f&photo_id='
                     + response.photos.photo[0].id + 
                     '&format=json&nojsoncallback=1'
@@ -697,7 +692,6 @@ function getImgFlickr(uiCallback, url) {
                 try {
                   var response = JSON.parse(text)
                   var org_image = response.sizes.size[0].source
-                  // trace("text2: " + org_image + '\n')
                   if (org_image) {
                     uiCallback(org_image)
                   }
